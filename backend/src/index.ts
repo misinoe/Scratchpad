@@ -21,7 +21,7 @@ class Room {
   private dataIndex = 0;
   private sharedData = {};
 
-  private maxTime = 3;
+  private maxTime = 18;
   private time = this.maxTime;
 
   private socketMap = new Map<string, Socket>();
@@ -55,7 +55,7 @@ class Room {
       this.socketIo.emit('changed', {name: 't', data: this.time})
     }
 
-    setTimeout(this.notifyTimer, 3000);
+    setTimeout(this.notifyTimer, 10000);
   }
 
   private clientConnectionHandler = (clientSocket: Socket) => {
@@ -94,10 +94,3 @@ class Room {
 const room1 = new Room(io.of('/1'));
 const room2 = new Room(io.of('/2'));
 const room3 = new Room(io.of('/3'));
-
-io.on('connection', socket => {
-  
-  socket.on('a', data => {
-    console.log(data);
-  })
-});
