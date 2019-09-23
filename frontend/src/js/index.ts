@@ -153,6 +153,7 @@ background.on('pointerdown', (event: interaction.InteractionPointerEvents) => {
 const pointerMoveHandler = (event: interaction.InteractionPointerEvents) => {
   // @ts-ignore
   const data: interaction.InteractionData = event.data;
+  if (!data.isPrimary) return;
   const {x: prevX, y: prevY} = previousPoint;
   const {x, y} = drawable.insetPoint(data.global);
 
@@ -183,19 +184,3 @@ const pointerUpHandler = (event?: interaction.InteractionPointerEvents) => {
   background.off('pointerup', pointerUpHandler);
   background.off('pointerupoutside', pointerUpHandler);
 };
-
-
-// setInterval(() => {
-//   const colorString = Base64.encode(0xffffff * Math.random());
-//   const pointStringList = [];
-//   for (var i = 0; i < 3; i++) {
-//     const x = Math.random() * 1023 | 0;
-//     const y = Math.random() * 1023 | 0;
-//     const v = Base64.encode((x & 1023) + (y << 10));
-
-//     pointStringList.push(v);
-//   }
-
-//   const payload = colorString.padStart(5, '0') + pointStringList.join(',');
-//   socket.emit('a', payload);
-// }, 1000);
