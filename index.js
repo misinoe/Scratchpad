@@ -1,1 +1,1 @@
-require('./backend/dist/index');
+require('./dist/index.js');
