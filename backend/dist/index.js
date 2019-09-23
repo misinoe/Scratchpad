@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const HTTP_PORT = parseInt(process.env['HTTP_PORT']) || 8888;
+const HTTP_PORT = parseInt(process.env['PORT']) || 8088;
 if (isNaN(HTTP_PORT)) {
     throw new Error('invalid HTTP_PORT from ENV');
     process.exit(1);
