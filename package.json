@@ -6,8 +6,9 @@
     "start": "cd backend && npm run start"
   },
   "files": [
-    "backend/",
-    "frontend/"
+    "./backend/",
+    "./frontend/",
+    "index.js"
   ],
   "repository": "git@github.com:misinoe/Scratchpad.git",
   "author": "misinoe <7781818+misinoe@users.noreply.github.com>",
