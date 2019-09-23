@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "parcel": "^1.12.3",
-    "pixi.js": "^5.1.4",
+    "pixi.js-legacy": "^5.1.4",
     "rimraf": "^3.0.0",
     "socket.io-client": "^2.3.0",
     "typescript": "^3.6.3"

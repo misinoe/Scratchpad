@@ -44,7 +44,6 @@ background.beginFill(0xffffff)
   .lineStyle(1, 0xcccccc)
   .drawRect(0, 0, drawable.width, drawable.height);
 
-  console.log(view.width);
 const cursor = new Graphics();
 cursor.setParent(application.stage);
 cursor.beginFill(0xff0000)
