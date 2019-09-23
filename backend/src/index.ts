@@ -5,6 +5,7 @@ if (isNaN(HTTP_PORT)) {
   process.exit(1);
 }
 
+import path from 'path';
 import http from 'http';
 import express from 'express';
 import socketIo, {Namespace, Socket} from 'socket.io';
@@ -15,7 +16,7 @@ const io = socketIo(httpServer);
 
 httpServer.listen(HTTP_PORT);
 
-app.use(express.static('./static'));
+app.use(express.static(path.join(__dirname,  '../static')));
 
 class Room {
   private dataIndex = 0;

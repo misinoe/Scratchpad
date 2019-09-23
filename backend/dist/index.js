@@ -9,6 +9,7 @@ if (isNaN(HTTP_PORT)) {
     throw new Error('invalid HTTP_PORT from ENV');
     process.exit(1);
 }
+const path_1 = __importDefault(require("path"));
 const http_1 = __importDefault(require("http"));
 const express_1 = __importDefault(require("express"));
 const socket_io_1 = __importDefault(require("socket.io"));
@@ -16,7 +17,7 @@ const app = express_1.default();
 const httpServer = new http_1.default.Server(app);
 const io = socket_io_1.default(httpServer);
 httpServer.listen(HTTP_PORT);
-app.use(express_1.default.static('./static'));
+app.use(express_1.default.static(path_1.default.join(__dirname, '../static')));
 class Room {
     constructor(socketIo) {
         this.dataIndex = 0;
