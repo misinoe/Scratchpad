@@ -1,0 +1,12 @@
+{
+  "name": "Scratchpad",
+  "version": "1.0.0",
+  "main": "index.js",
+  "script": {
+    "install": "cd backend && npm install",
+    "start": "cd backend && npm run start"
+  },
+  "repository": "git@github.com:misinoe/Scratchpad.git",
+  "author": "misinoe <7781818+misinoe@users.noreply.github.com>",
+  "license": "MIT"
+}
