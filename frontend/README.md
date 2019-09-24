@@ -16,6 +16,5 @@ $ yarn install
 ## ビルド
 
 ```
-$ yarn run clean
 $ yarn run build
 ```
