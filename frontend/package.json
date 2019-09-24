@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "yarn run rimraf output/**/*",
     "watch": "yarn run parcel watch ./src/*.html --out-dir ./output",
-    "build": "yarn run parcel build ./src/*.html --out-dir ./output"
+    "build": "yarn run clean && yarn run parcel build ./src/*.html --out-dir ./output"
   },
   "devDependencies": {
     "parcel": "^1.12.3",
