@@ -128,6 +128,7 @@ socket.on('delete', (deleteNames: string[]) => {
 let dataBuffer: string;
 let previewGraphics: Graphics;
 let previousPoint: {x: number, y: number};
+let reservePoint: {x: number, y: number};
 background.interactive = true;
 background.on('pointerdown', (event: interaction.InteractionPointerEvents) => {
   // @ts-ignore
@@ -148,14 +149,22 @@ background.on('pointerdown', (event: interaction.InteractionPointerEvents) => {
   background.on('pointermove', pointerMoveHandler);
   background.once('pointerup', pointerUpHandler);
   background.once('pointerupoutside', pointerUpHandler);
+  ticker.add(pointUpdate);
   pointerMoveHandler(event);
 });
 const pointerMoveHandler = (event: interaction.InteractionPointerEvents) => {
   // @ts-ignore
   const data: interaction.InteractionData = event.data;
   if (!data.isPrimary) return;
+  const {x, y} = data.global;
+  reservePoint = {x, y};
+};
+
+const pointUpdate = () => {
+  const {x, y} = drawable.insetPoint(reservePoint);
   const {x: prevX, y: prevY} = previousPoint;
-  const {x, y} = drawable.insetPoint(data.global);
+
+  if (x === prevX && y === prevY) return;
 
   previewGraphics.moveTo(prevX, prevY);
   previewGraphics.lineTo(x, y);
@@ -181,4 +190,5 @@ const pointerUpHandler = (event?: interaction.InteractionPointerEvents) => {
   background.off('pointermove', pointerMoveHandler);
   background.off('pointerup', pointerUpHandler);
   background.off('pointerupoutside', pointerUpHandler);
+  ticker.remove(pointUpdate);
 };
