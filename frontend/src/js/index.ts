@@ -165,9 +165,6 @@ const pointerMoveHandler = (event: interaction.InteractionPointerEvents) => {
 
   dataBuffer += ',' + Base64.encode((x & 1023) + (y << 10));
 };
-const pointerEnd = () => {
-
-};
 
 const pointerUpHandler = (event?: interaction.InteractionPointerEvents) => {
   // @ts-ignore
@@ -178,7 +175,8 @@ const pointerUpHandler = (event?: interaction.InteractionPointerEvents) => {
   
   sharedContainer.removeChild(previewGraphics);
 
-  socket.emit('a', dataBuffer);
+  if (dataBuffer) socket.emit('a', dataBuffer);
+  dataBuffer = null;
 
   background.off('pointermove', pointerMoveHandler);
   background.off('pointerup', pointerUpHandler);
