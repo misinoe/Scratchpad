@@ -128,7 +128,6 @@ socket.on('delete', (deleteNames: string[]) => {
 let dataBuffer: string;
 let previewGraphics: Graphics;
 let previousPoint: {x: number, y: number};
-let reservePoint: {x: number, y: number};
 background.interactive = true;
 background.on('pointerdown', (event: interaction.InteractionPointerEvents) => {
   // @ts-ignore
@@ -156,14 +155,8 @@ const pointerMoveHandler = (event: interaction.InteractionPointerEvents) => {
   // @ts-ignore
   const data: interaction.InteractionData = event.data;
   if (!data.isPrimary) return;
-  const {x, y} = data.global;
-  reservePoint = {x, y};
-};
-
-const pointUpdate = () => {
-  const {x, y} = drawable.insetPoint(reservePoint);
   const {x: prevX, y: prevY} = previousPoint;
-
+  const {x, y} = drawable.insetPoint(data.global);
   if (x === prevX && y === prevY) return;
 
   previewGraphics.moveTo(prevX, prevY);
@@ -175,10 +168,15 @@ const pointUpdate = () => {
   dataBuffer += ',' + Base64.encode((x & 1023) + (y << 10));
 };
 
+const pointUpdate = () => {
+
+};
+
 const pointerUpHandler = (event?: interaction.InteractionPointerEvents) => {
   // @ts-ignore
   const data: interaction.InteractionData = event.data;
   if (!data.isPrimary) return;
+  pointerMoveHandler(event);
   
   cursor.visible = false;
   
@@ -190,5 +188,4 @@ const pointerUpHandler = (event?: interaction.InteractionPointerEvents) => {
   background.off('pointermove', pointerMoveHandler);
   background.off('pointerup', pointerUpHandler);
   background.off('pointerupoutside', pointerUpHandler);
-  ticker.remove(pointUpdate);
 };
