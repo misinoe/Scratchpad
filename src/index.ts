@@ -1,4 +1,3 @@
-#!/usr/share/node
 const HTTP_PORT = parseInt(process.env['PORT']) || 5000;
 if (isNaN(HTTP_PORT)) {
   throw new Error('invalid HTTP_PORT from ENV');
