@@ -3,11 +3,12 @@
 
 [Demo](https://is-this-scratchpad.herokuapp.com)
 
-## 開発
+## 必要構成
 
 * Node.js 10+
 * yarn
 
+## 始め方
 
 ### インストール
 
@@ -29,4 +30,10 @@ $ yarn run start
 
 ```
 $ export PORT=80
+```
+
+## 開発
+
+```
+$ yarn run build
 ```
