@@ -1,7 +1,10 @@
 # Is This Scratchpad?
+
 ![image](./media.png)
 
-[Demo](https://is-this-scratchpad.herokuapp.com)
+* ![https://www.heroku.com/deploy/?template=https://github.com/misinoe/Scratchpad](https://www.herokucdn.com/deploy/button.svg)
+* [Demo](https://is-this-scratchpad.herokuapp.com)
+
 
 ## 必要構成
 
