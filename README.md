@@ -24,3 +24,9 @@ or
 
 $ yarn run start
 ```
+
+### ポート番号の指定
+
+```
+$ export PORT=80
+```
