@@ -149,6 +149,7 @@ background.on('pointerdown', (event: interaction.InteractionPointerEvents) => {
   dataBuffer = Base64.encode(color).padStart(4, '0') + Base64.encode((x & 1023) + (y << 10));
 
   cursor.visible = true;
+  cursor.position.set(x, y);
 
   pointUpdateTicker.add(pointUpdate);
   pointUpdateTicker.start();
