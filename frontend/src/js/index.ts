@@ -1,4 +1,4 @@
-import {Application, Container, Graphics, interaction, Point, Text, TextStyle} from 'pixi.js-legacy';
+import {Application, Container, Graphics, interaction, Point, Text, TextStyle, Ticker} from 'pixi.js-legacy';
 import socketIo from 'socket.io-client';
 import Base64 from './Base64';
 import querystring from 'querystring';
@@ -125,9 +125,13 @@ socket.on('delete', (deleteNames: string[]) => {
   });
 });
 
+const pointUpdateTicker = new Ticker();
+pointUpdateTicker.maxFPS = 60;
+
 let dataBuffer: string;
 let previewGraphics: Graphics;
 let previousPoint: {x: number, y: number};
+let reservePoint: {x: number, y: number};
 background.interactive = true;
 background.on('pointerdown', (event: interaction.InteractionPointerEvents) => {
   // @ts-ignore
@@ -140,10 +144,14 @@ background.on('pointerdown', (event: interaction.InteractionPointerEvents) => {
   previewGraphics.lineStyle(2, color);
   const {x, y} = drawable.insetPoint(data.global);
   previousPoint = {x, y};
+  reservePoint = {x, y};
 
   dataBuffer = Base64.encode(color).padStart(4, '0') + Base64.encode((x & 1023) + (y << 10));
 
   cursor.visible = true;
+
+  pointUpdateTicker.add(pointUpdate);
+  pointUpdateTicker.start();
 
   background.on('pointermove', pointerMoveHandler);
   background.once('pointerup', pointerUpHandler);
@@ -155,8 +163,13 @@ const pointerMoveHandler = (event: interaction.InteractionPointerEvents) => {
   // @ts-ignore
   const data: interaction.InteractionData = event.data;
   if (!data.isPrimary) return;
+  const {x, y} = data.global;
+  reservePoint = {x, y};
+};
+
+const pointUpdate = () => {
   const {x: prevX, y: prevY} = previousPoint;
-  const {x, y} = drawable.insetPoint(data.global);
+  const {x, y} = drawable.insetPoint(reservePoint);
   if (x === prevX && y === prevY) return;
 
   previewGraphics.moveTo(prevX, prevY);
@@ -166,10 +179,6 @@ const pointerMoveHandler = (event: interaction.InteractionPointerEvents) => {
   cursor.position.set(x, y);
 
   dataBuffer += ',' + Base64.encode((x & 1023) + (y << 10));
-};
-
-const pointUpdate = () => {
-
 };
 
 const pointerUpHandler = (event?: interaction.InteractionPointerEvents) => {
@@ -184,6 +193,9 @@ const pointerUpHandler = (event?: interaction.InteractionPointerEvents) => {
 
   if (dataBuffer) socket.emit('a', dataBuffer);
   dataBuffer = null;
+
+  pointUpdateTicker.stop();
+  pointUpdateTicker.remove(pointUpdate);
 
   background.off('pointermove', pointerMoveHandler);
   background.off('pointerup', pointerUpHandler);
