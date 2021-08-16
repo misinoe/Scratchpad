@@ -90,6 +90,6 @@ class Room {
   }
 }
 
-const room1 = new Room(socketIoServer.of('/1'));
-const room2 = new Room(socketIoServer.of('/2'));
-const room3 = new Room(socketIoServer.of('/3'));
+new Room(socketIoServer.of('/1'));
+new Room(socketIoServer.of('/2'));
+new Room(socketIoServer.of('/3'));
