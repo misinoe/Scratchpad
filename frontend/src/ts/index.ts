@@ -2,6 +2,7 @@ import {Application, Container, Graphics, InteractionData, InteractivePointerEve
 import {io as socketIo} from 'socket.io-client';
 import Base64 from './Base64';
 import querystring from 'querystring';
+import '../css/index.css';
 
 const view: HTMLCanvasElement = document.getElementById('canvas') as HTMLCanvasElement;
 const colorPicker: HTMLInputElement = document.getElementById('color-picker') as HTMLInputElement;
