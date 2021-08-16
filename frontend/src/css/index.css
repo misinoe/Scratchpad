@@ -32,6 +32,7 @@ body{
 }
 
 .top-bar__logo {
+  text-align: center;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-size: 20px;
   transform: rotateZ(-5deg);

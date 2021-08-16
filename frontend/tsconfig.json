@@ -8,5 +8,6 @@
       "esnext"
     ]
   },
-  "include": ["./src/js/**/*"]
+  "include": ["src/ts/**/*"],
+  "exclude": ["node_modules"]
 }

@@ -1,17 +1,16 @@
-const HTTP_PORT = parseInt(process.env['PORT']) || 5000;
+const HTTP_PORT = parseInt(process.env['PORT']) || 5050;
 if (isNaN(HTTP_PORT)) {
   throw new Error('invalid HTTP_PORT from ENV');
-  process.exit(1);
 }
 
 import path from 'path';
 import http from 'http';
 import express from 'express';
-import socketIo, {Namespace, Socket} from 'socket.io';
+import {Server as SocketIoServer, Namespace, Socket} from 'socket.io';
 
 const app = express();
 const httpServer = new http.Server(app);
-const io = socketIo(httpServer);
+const socketIoServer = new SocketIoServer(httpServer);
 
 httpServer.listen(HTTP_PORT);
 
@@ -91,6 +90,6 @@ class Room {
   }
 }
 
-const room1 = new Room(io.of('/1'));
-const room2 = new Room(io.of('/2'));
-const room3 = new Room(io.of('/3'));
+new Room(socketIoServer.of('/1'));
+new Room(socketIoServer.of('/2'));
+new Room(socketIoServer.of('/3'));
