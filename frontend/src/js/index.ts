@@ -1,5 +1,5 @@
-import {Application, Container, Graphics, interaction, Point, Text, TextStyle, Ticker} from 'pixi.js-legacy';
-import socketIo from 'socket.io-client';
+import {Application, Container, Graphics, InteractionData, InteractivePointerEvent, Text, TextStyle, Ticker} from 'pixi.js-legacy';
+import {io as socketIo} from 'socket.io-client';
 import Base64 from './Base64';
 import querystring from 'querystring';
 
@@ -14,8 +14,8 @@ const drawable = {
     return {
       x: Math.min(this.width, Math.max(this.x, point.x)),
       y: Math.min(this.height, Math.max(this.y, point.y)),
-    }
-  }
+    };
+  },
 };
 
 const application = new Application({
@@ -31,7 +31,6 @@ const application = new Application({
 
 const {ticker, stage} = application;
 application.ticker.maxFPS = 24;
-
 
 const queries = querystring.parse(location.search.slice(1));
 const roomId = queries.room ? queries.room : '1';
@@ -133,9 +132,9 @@ let previewGraphics: Graphics;
 let previousPoint: {x: number, y: number};
 let reservePoint: {x: number, y: number};
 background.interactive = true;
-background.on('pointerdown', (event: interaction.InteractionPointerEvents) => {
+background.on('pointerdown', (event: InteractivePointerEvent) => {
   // @ts-ignore
-  const data: interaction.InteractionData = event.data;
+  const data: InteractionData = event.data;
   if (!data.isPrimary) return;
 
   const color = parseInt(colorPicker.value.slice(1), 16);
@@ -160,9 +159,9 @@ background.on('pointerdown', (event: interaction.InteractionPointerEvents) => {
   ticker.add(pointUpdate);
   pointerMoveHandler(event);
 });
-const pointerMoveHandler = (event: interaction.InteractionPointerEvents) => {
+const pointerMoveHandler = (event: InteractivePointerEvent) => {
   // @ts-ignore
-  const data: interaction.InteractionData = event.data;
+  const data: InteractionData = event.data;
   if (!data.isPrimary) return;
   const {x, y} = data.global;
   reservePoint = {x, y};
@@ -182,7 +181,7 @@ const pointUpdate = () => {
   dataBuffer += ',' + Base64.encode((x & 1023) + (y << 10));
 };
 
-const pointerUpHandler = (event?: interaction.InteractionPointerEvents) => {
+const pointerUpHandler = (event?: InteractivePointerEvent) => {
   // @ts-ignore
   const data: interaction.InteractionData = event.data;
   if (!data.isPrimary) return;
